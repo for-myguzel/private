@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1d1d1d">
   <title>Для тебя</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #1d1d1d;
@@ -23,7 +26,7 @@
     }
 
     body {
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "Times New Roman";
     }
 
     [hidden] { display: none !important; }
@@ -43,12 +46,12 @@
       width: 100%;
       max-width: 340px;
       text-align: center;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Inter, "Times New Roman";
     }
 
     .eyebrow {
       margin: 0 0 28px;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Inter, "Times New Roman";
       font-size: 10px;
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -66,7 +69,7 @@
     .description {
       margin: 0;
       color: var(--muted);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Inter, "Times New Roman";
       font-size: 13px;
       line-height: 1.6;
     }
@@ -83,7 +86,7 @@
       background: transparent;
       color: var(--text);
       text-align: center;
-      font: 22px Arial, Helvetica, sans-serif;
+      font: 22px Inter, "Times New Roman";
       letter-spacing: 12px;
       outline: none;
       caret-color: var(--text);
@@ -101,7 +104,7 @@
       border-radius: 0;
       background: transparent;
       color: var(--text);
-      font: 12px Arial, Helvetica, sans-serif;
+      font: 12px Inter, "Times New Roman";
       letter-spacing: .4px;
       cursor: pointer;
       transition: background .2s ease, color .2s ease;
@@ -121,21 +124,27 @@
       min-height: 18px;
       margin: 12px 0 0;
       color: #f2f0ed;
-      font: 12px Arial, Helvetica, sans-serif;
+      font: 12px Inter, "Times New Roman";
     }
 
     /* LETTER / INTRO SCREEN */
     .letter-screen {
-      align-items: center;
+      align-items: flex-start;
+      justify-content: center;
     }
 
     .letter-wrap {
-      width: min(100%, 480px);
+      width: min(100%, 760px);
       margin: 0 auto;
     }
 
+    .letter-copy,
+    .letter-signature {
+      max-width: 480px;
+    }
+
     .letter-copy {
-      font-family: "Times New Roman", Times, serif;
+      font-family: "Times New Roman";
       font-size: 16px;
       font-style: italic;
       font-weight: 400;
@@ -143,7 +152,7 @@
     }
 
     .letter-signature {
-      font-family: "Times New Roman", Times, serif;
+      font-family: "Times New Roman";
       font-size: 16px;
       font-style: italic;
       font-weight: 400;
@@ -158,14 +167,14 @@
     /* VIDEO SCREEN */
     .movie-content {
       width: 100%;
-      max-width: 1000px;
-      margin: auto;
+      max-width: 760px;
+      margin: 64px auto 0;
       text-align: center;
     }
 
     .movie-heading {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: "Times New Roman";
       font-size: clamp(24px, 4vw, 38px);
       font-style: italic;
       font-weight: 400;
@@ -202,12 +211,12 @@
     .video-placeholder p {
       margin: 0;
       color: #c8c6c3;
-      font: 12px Arial, Helvetica, sans-serif;
+      font: 12px Inter, "Times New Roman";
     }
 
     .timestamp {
       color: #8c8a87;
-      font: 10px Arial, Helvetica, sans-serif;
+      font: 10px Inter, "Times New Roman";
       letter-spacing: 2px;
     }
 
@@ -241,7 +250,7 @@
     .movie-note {
       margin: 18px 0 0;
       color: var(--muted);
-      font: 11px Arial, Helvetica, sans-serif;
+      font: 11px Inter, "Times New Roman";
     }
 
     @media (max-width: 600px) {
@@ -249,14 +258,10 @@
       .letter-wrap { max-width: 100%; }
       .letter-copy { font-size: 18px; line-height: 1.25; }
       .letter-signature { margin-top: 28px; font-size: 18px; }
-      .letter-actions { margin-top: 36px; }
       .video-frame { margin-top: 24px; }
-      .movie-content { width: 100%; }
+      .movie-content { width: 100%; margin-top: 48px; }
     }
 
-    @media (min-width: 1000px) {
-      .letter-wrap { transform: translateY(-2vh); }
-    }
   </style>
 </head>
 <body>
@@ -301,16 +306,8 @@
 
         <p class="letter-signature">—Твой С.</p>
 
-        <div class="letter-actions">
-          <button id="continue-button" class="button" type="button">
-            Продолжить
-          </button>
-        </div>
-      </div>
-    </section>
+        <div class="movie-content">
 
-    <section id="movie-screen" class="screen" hidden>
-      <div class="movie-content">
         <p class="eyebrow">private screening</p>
         <h1 class="movie-heading">А теперь — фильм.</h1>
 
@@ -328,6 +325,7 @@
             allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
         <p class="movie-note">Приятного просмотра.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -341,11 +339,9 @@
 
       const pinScreen = document.getElementById("pin-screen");
       const letterScreen = document.getElementById("letter-screen");
-      const movieScreen = document.getElementById("movie-screen");
       const pinForm = document.getElementById("pin-form");
       const pinInput = document.getElementById("pin-input");
       const pinError = document.getElementById("pin-error");
-      const continueButton = document.getElementById("continue-button");
       const playButton = document.getElementById("play-button");
       const placeholder = document.getElementById("video-placeholder");
       const player = document.getElementById("movie-player");
@@ -385,11 +381,6 @@
           pinInput.value = "";
           pinInput.focus();
         }
-      });
-
-      continueButton.addEventListener("click", () => {
-        letterScreen.hidden = true;
-        movieScreen.hidden = false;
       });
 
       playButton.addEventListener("click", () => {
