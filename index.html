@@ -138,9 +138,20 @@
       margin: 0 auto;
     }
 
-    .letter-copy,
-    .letter-signature {
+    .letter-copy {
+      width: 100%;
       max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .letter-signature {
+      width: 100%;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: right;
     }
 
     .letter-copy {
@@ -149,6 +160,7 @@
       font-style: italic;
       font-weight: 400;
       line-height: 1.28;
+      white-space: pre-line;
     }
 
     .letter-signature {
@@ -170,15 +182,6 @@
       max-width: 760px;
       margin: 64px auto 0;
       text-align: center;
-    }
-
-    .movie-heading {
-      margin: 0;
-      font-family: "Times New Roman";
-      font-size: clamp(24px, 4vw, 38px);
-      font-style: italic;
-      font-weight: 400;
-      letter-spacing: -.5px;
     }
 
     .video-frame {
@@ -206,12 +209,6 @@
       align-items: center;
       gap: 16px;
       background: #1d1d1d;
-    }
-
-    .video-placeholder p {
-      margin: 0;
-      color: #c8c6c3;
-      font: 12px Inter, "Times New Roman";
     }
 
     .timestamp {
@@ -247,12 +244,6 @@
       background: #000;
     }
 
-    .movie-note {
-      margin: 18px 0 0;
-      color: var(--muted);
-      font: 11px Inter, "Times New Roman";
-    }
-
     @media (max-width: 600px) {
       .screen { padding: 36px 24px; }
       .letter-wrap { max-width: 100%; }
@@ -268,7 +259,6 @@
   <main id="film-site">
     <section id="pin-screen" class="screen">
       <div class="pin-content">
-        <p class="eyebrow">private screening</p>
         <h1>Для тебя</h1>
         <p class="description">Введи код, чтобы открыть письмо</p>
 
@@ -276,7 +266,7 @@
           <input id="pin-input" type="text" inputmode="numeric"
             maxlength="4" pattern="[0-9]{4}" placeholder="****"
             autocomplete="off" aria-label="Пин-код" required>
-          <button class="button" type="submit">Продолжить ↗</button>
+          <button class="button" type="submit">Продолжить</button>
           <p id="pin-error" role="alert" aria-live="polite"></p>
         </form>
       </div>
@@ -287,13 +277,13 @@
         <p class="letter-copy">Возможно, я нарушаю наши договорённости,
 но я больше не хочу верить в теорию
 «если любишь — отпусти» и не
-хочу просто надеяться на судьбу
+хочу просто надеяться на судьбу</p>
 
-Я буду бороться за нас, за
+<p class="letter-copy">Я буду бороться за нас, за
 возможность снова стать
-людьми, которым хорошо вместе
+людьми, которым хорошо вместе</p>
 
-Я понимаю, что нельзя за один день
+<p class="letter-copy">Я понимаю, что нельзя за один день
 исправить то, что копилось месяцами.
 Нельзя одним букетом цветов
 компенсировать всё, чего тебе не хватало. И
@@ -307,24 +297,18 @@
         <p class="letter-signature">—Твой С.</p>
 
         <div class="movie-content">
-
-        <p class="eyebrow">private screening</p>
-        <h1 class="movie-heading">А теперь — фильм.</h1>
-
-        <div class="video-frame">
-          <div id="video-placeholder" class="video-placeholder">
-            <button id="play-button" type="button" aria-label="Начать просмотр">
-              <span class="play-icon">▶</span>
-            </button>
-            <p>Нажми, чтобы начать просмотр</p>
-            <span class="timestamp">01:44:56</span>
-          </div>
+          <div class="video-frame">
+            <div id="video-placeholder" class="video-placeholder">
+              <button id="play-button" type="button" aria-label="Начать просмотр">
+                <span class="play-icon">▶</span>
+              </button>
+              <span class="timestamp">01:44:56</span>
+            </div>
 
           <iframe id="movie-player" title="Видеоплеер VK Видео"
             allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-        </div>
-        <p class="movie-note">Приятного просмотра.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -388,12 +372,12 @@
           const url = new URL(VIDEO_EMBED_URL);
           url.searchParams.set("t", START_TIME);
           url.searchParams.set("autoplay", "1");
+          url.searchParams.set("muted", "0");
           player.src = url.toString();
           player.style.display = "block";
           placeholder.style.display = "none";
         } catch (_) {
-          placeholder.querySelector("p").textContent =
-            "Не удалось открыть видео. Проверь ссылку.";
+          // При ошибке оставляем минимальный экран с кнопкой и таймкодом.
         }
       });
     })();
