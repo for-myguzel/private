@@ -3,96 +3,395 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171715">
-  <title>Private Screening</title>
+  <meta name="theme-color" content="#1d1d1d">
+  <title>Для тебя</title>
   <style>
-    :root { color-scheme: dark; --bg:#171715; --text:#f0eee8; --muted:#93918a; --accent:#d7ff64; }
-    * { box-sizing:border-box; }
-    html,body { margin:0; min-height:100%; background:var(--bg); }
-    body { font-family:Arial,Helvetica,sans-serif; color:var(--text); }
-    [hidden] { display:none !important; }
-    .screen { min-height:100vh; min-height:100svh; display:flex; align-items:center; justify-content:center; padding:48px 24px; }
-    .pin-content { width:100%; max-width:390px; text-align:center; }
-    .movie-content { width:100%; max-width:1000px; text-align:center; }
-    .eyebrow { color:var(--accent); font-size:10px; font-weight:700; letter-spacing:3px; margin-bottom:28px; }
-    h1 { color:var(--text); font-size:clamp(32px,6vw,54px); line-height:1.08; letter-spacing:-2px; font-weight:600; margin:0 0 18px; }
-    .description,.movie-note { color:var(--muted); font-size:14px; line-height:1.6; }
-    #pin-form { margin-top:34px; }
-    #pin-input { display:block; width:100%; height:64px; border:1px solid #484840; border-radius:8px; background:#20201d; color:var(--text); text-align:center; font-size:26px; letter-spacing:12px; padding:0 12px; outline:none; }
-    #pin-input:focus { border-color:var(--accent); }
-    #pin-form button { width:100%; min-height:56px; border:0; border-radius:8px; margin-top:12px; padding:14px 20px; background:var(--accent); color:#171715; font-size:14px; font-weight:700; cursor:pointer; }
-    #pin-form button:hover { background:#e4ff9b; }
-    #pin-error { min-height:20px; color:#ff8989; font-size:13px; }
-    .video-frame { position:relative; width:100%; aspect-ratio:16/9; margin-top:34px; overflow:hidden; background:#090909; border:1px solid #363630; border-radius:10px; }
-    .video-placeholder,#movie-player { position:absolute; inset:0; width:100%; height:100%; }
-    .video-placeholder { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:16px; background:radial-gradient(ellipse at center,#30302a 0%,#10100f 70%); }
-    .video-placeholder p { margin:0; color:#c0bfb6; font-size:13px; }
-    .timestamp { color:#77766f; font-size:11px; letter-spacing:2px; }
-    #play-button { display:flex; align-items:center; justify-content:center; width:68px; height:68px; flex-shrink:0; border:0; border-radius:50%; background:var(--accent); color:#171715; cursor:pointer; transition:transform .2s ease; }
-    #play-button:hover { transform:scale(1.08); }
-    .play-icon { font-size:23px; margin-left:4px; }
-    #movie-player { display:none; border:0; background:#000; }
-    .movie-note { margin-top:18px; }
-    @media(max-width:600px) { .screen { padding:32px 18px; } h1 { letter-spacing:-1.5px; } .video-frame { border-radius:6px; } }
+    :root {
+      --bg: #1d1d1d;
+      --text: #f2f0ed;
+      --muted: #a8a6a3;
+      --line: #777572;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    [hidden] { display: none !important; }
+
+    .screen {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px;
+      background: var(--bg);
+    }
+
+    /* PIN SCREEN */
+    .pin-content {
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .eyebrow {
+      margin: 0 0 28px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 1.08;
+      font-weight: 400;
+      letter-spacing: -1.5px;
+    }
+
+    .description {
+      margin: 0;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    #pin-form { margin-top: 32px; }
+
+    #pin-input {
+      display: block;
+      width: 100%;
+      height: 58px;
+      padding: 0 16px;
+      border: 1px solid #777;
+      border-radius: 0;
+      background: transparent;
+      color: var(--text);
+      text-align: center;
+      font: 22px Arial, Helvetica, sans-serif;
+      letter-spacing: 12px;
+      outline: none;
+      caret-color: var(--text);
+    }
+
+    #pin-input:focus { border-color: #f2f0ed; }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50px;
+      padding: 14px 20px;
+      border: 1px solid var(--text);
+      border-radius: 0;
+      background: transparent;
+      color: var(--text);
+      font: 12px Arial, Helvetica, sans-serif;
+      letter-spacing: .4px;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .button:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    #pin-form .button {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    #pin-error {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: #f2f0ed;
+      font: 12px Arial, Helvetica, sans-serif;
+    }
+
+    /* LETTER / INTRO SCREEN */
+    .letter-screen {
+      align-items: center;
+    }
+
+    .letter-wrap {
+      width: min(100%, 480px);
+      margin: 0 auto;
+    }
+
+    .letter-copy {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.28;
+    }
+
+    .letter-signature {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .letter-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 48px;
+    }
+
+    /* VIDEO SCREEN */
+    .movie-content {
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .movie-heading {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(24px, 4vw, 38px);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -.5px;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin-top: 34px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid #555;
+    }
+
+    .video-placeholder,
+    #movie-player {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      background: #1d1d1d;
+    }
+
+    .video-placeholder p {
+      margin: 0;
+      color: #c8c6c3;
+      font: 12px Arial, Helvetica, sans-serif;
+    }
+
+    .timestamp {
+      color: #8c8a87;
+      font: 10px Arial, Helvetica, sans-serif;
+      letter-spacing: 2px;
+    }
+
+    #play-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 66px;
+      height: 66px;
+      border: 1px solid var(--text);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    #play-button:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .play-icon { font-size: 20px; margin-left: 3px; }
+
+    #movie-player {
+      display: none;
+      border: 0;
+      background: #000;
+    }
+
+    .movie-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font: 11px Arial, Helvetica, sans-serif;
+    }
+
+    @media (max-width: 600px) {
+      .screen { padding: 36px 24px; }
+      .letter-wrap { max-width: 100%; }
+      .letter-copy { font-size: 18px; line-height: 1.25; }
+      .letter-signature { margin-top: 28px; font-size: 18px; }
+      .letter-actions { margin-top: 36px; }
+      .video-frame { margin-top: 24px; }
+      .movie-content { width: 100%; }
+    }
+
+    @media (min-width: 1000px) {
+      .letter-wrap { transform: translateY(-2vh); }
+    }
   </style>
 </head>
 <body>
   <main id="film-site">
     <section id="pin-screen" class="screen">
       <div class="pin-content">
-        <div class="eyebrow">PRIVATE SCREENING</div>
+        <p class="eyebrow">private screening</p>
         <h1>Для тебя</h1>
-        <p class="description">Введи код, чтобы продолжить</p>
-        <form id="pin-form">
-          <input id="pin-input" type="password" inputmode="numeric" maxlength="4" pattern="[0-9]{4}" placeholder="••••" autocomplete="off" aria-label="Пин-код" required>
-          <button type="submit">Открыть фильм ↗</button>
+        <p class="description">Введи код, чтобы открыть письмо</p>
+
+        <form id="pin-form" novalidate>
+          <input id="pin-input" type="text" inputmode="numeric"
+            maxlength="4" pattern="[0-9]{4}" placeholder="****"
+            autocomplete="off" aria-label="Пин-код" required>
+          <button class="button" type="submit">Продолжить ↗</button>
           <p id="pin-error" role="alert" aria-live="polite"></p>
         </form>
       </div>
     </section>
+
+    <section id="letter-screen" class="screen letter-screen" hidden>
+      <div class="letter-wrap">
+        <p class="letter-copy">Возможно, я нарушаю наши договорённости,
+но я больше не хочу верить в теорию
+«если любишь — отпусти» и не
+хочу просто надеяться на судьбу
+
+Я буду бороться за нас, за
+возможность снова стать
+людьми, которым хорошо вместе
+
+Я понимаю, что нельзя за один день
+исправить то, что копилось месяцами.
+Нельзя одним букетом цветов
+компенсировать всё, чего тебе не хватало. И
+я не хочу, чтобы ты подумала, будто сейчас я
+сделаю несколько красивых жестов, а потом
+всё снова станет как прежде. Я хочу, чтобы
+эти цветы были не каким-то обещанием, а
+напоминанием о том, что я действительно
+хочу делать тебя счастливее</p>
+
+        <p class="letter-signature">—Твой С.</p>
+
+        <div class="letter-actions">
+          <button id="continue-button" class="button" type="button">
+            Продолжить
+          </button>
+        </div>
+      </div>
+    </section>
+
     <section id="movie-screen" class="screen" hidden>
       <div class="movie-content">
-        <div class="eyebrow">PRIVATE SCREENING</div>
-        <h1>Приятного просмотра.</h1>
+        <p class="eyebrow">private screening</p>
+        <h1 class="movie-heading">А теперь — фильм.</h1>
+
         <div class="video-frame">
           <div id="video-placeholder" class="video-placeholder">
-            <button id="play-button" type="button" aria-label="Начать просмотр"><span class="play-icon">▶</span></button>
+            <button id="play-button" type="button" aria-label="Начать просмотр">
+              <span class="play-icon">▶</span>
+            </button>
             <p>Нажми, чтобы начать просмотр</p>
             <span class="timestamp">01:44:56</span>
           </div>
-          <iframe id="movie-player" title="Видеоплеер VK Видео" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+          <iframe id="movie-player" title="Видеоплеер VK Видео"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
-        <p class="movie-note">Фильм начинается с нужного момента.</p>
+        <p class="movie-note">Приятного просмотра.</p>
       </div>
     </section>
   </main>
+
   <script>
     (() => {
-      // Простая блокировка интерфейса, не защита от технического обхода.
       const PIN_CODE = "5512";
-      const VIDEO_EMBED_URL = "https://vkvideo.ru/video_ext.php?oid=-232125504&id=456239182&hd=2";
-      // VK может не поддерживать параметр времени в этом формате.
+      const VIDEO_EMBED_URL =
+        "https://vkvideo.ru/video_ext.php?oid=-232125504&id=456239182&hd=2";
       const START_TIME = "01h44m56s";
+
       const pinScreen = document.getElementById("pin-screen");
+      const letterScreen = document.getElementById("letter-screen");
       const movieScreen = document.getElementById("movie-screen");
       const pinForm = document.getElementById("pin-form");
       const pinInput = document.getElementById("pin-input");
       const pinError = document.getElementById("pin-error");
+      const continueButton = document.getElementById("continue-button");
       const playButton = document.getElementById("play-button");
       const placeholder = document.getElementById("video-placeholder");
       const player = document.getElementById("movie-player");
+
+      // Показываем звёздочки вместо введённых цифр.
+      // Реальный код хранится отдельно от видимого поля.
+      let actualPin = "";
+
+      pinInput.addEventListener("keydown", (event) => {
+        if (/^[0-9]$/.test(event.key)) {
+          event.preventDefault();
+
+          if (actualPin.length < 4) {
+            actualPin += event.key;
+            pinInput.value = "*".repeat(actualPin.length);
+          }
+        } else if (
+          event.key === "Backspace" ||
+          event.key === "Delete"
+        ) {
+          event.preventDefault();
+          actualPin = actualPin.slice(0, -1);
+          pinInput.value = "*".repeat(actualPin.length);
+        }
+      });
+
       pinForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        if (pinInput.value === PIN_CODE) {
+
+        if (actualPin === PIN_CODE) {
           pinError.textContent = "";
           pinScreen.hidden = true;
-          movieScreen.hidden = false;
+          letterScreen.hidden = false;
         } else {
           pinError.textContent = "Неверный код. Попробуй ещё раз.";
+          actualPin = "";
           pinInput.value = "";
           pinInput.focus();
         }
       });
+
+      continueButton.addEventListener("click", () => {
+        letterScreen.hidden = true;
+        movieScreen.hidden = false;
+      });
+
       playButton.addEventListener("click", () => {
         try {
           const url = new URL(VIDEO_EMBED_URL);
@@ -102,7 +401,8 @@
           player.style.display = "block";
           placeholder.style.display = "none";
         } catch (_) {
-          placeholder.querySelector("p").textContent = "Не удалось открыть видео. Проверь ссылку.";
+          placeholder.querySelector("p").textContent =
+            "Не удалось открыть видео. Проверь ссылку.";
         }
       });
     })();
